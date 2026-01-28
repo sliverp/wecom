@@ -23,7 +23,8 @@
       "defaultChoice": "npm"
     }
   },
-  "dependencies": {
-    "zod": "^4.3.6"
+  "dependencies": {},
+  "peerDependencies": {
+    "clawdbot": ">=2026.1.25"
   }
 }

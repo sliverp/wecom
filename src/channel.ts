@@ -4,7 +4,6 @@ import type {
   ClawdbotConfig,
 } from "clawdbot/plugin-sdk";
 import {
-  buildChannelConfigSchema,
   DEFAULT_ACCOUNT_ID,
   deleteAccountFromConfigSection,
   formatPairingApproveHint,
@@ -12,7 +11,7 @@ import {
 } from "clawdbot/plugin-sdk";
 
 import { listWecomAccountIds, resolveDefaultWecomAccountId, resolveWecomAccount } from "./accounts.js";
-import { WecomConfigSchema } from "./config-schema.js";
+import { wecomConfigSchema } from "./config-schema.js";
 import type { ResolvedWecomAccount } from "./types.js";
 import { registerWecomWebhookTarget } from "./monitor.js";
 
@@ -47,7 +46,7 @@ export const wecomPlugin: ChannelPlugin<ResolvedWecomAccount> = {
     blockStreaming: true,
   },
   reload: { configPrefixes: ["channels.wecom"] },
-  configSchema: buildChannelConfigSchema(WecomConfigSchema),
+  configSchema: wecomConfigSchema,
   config: {
     listAccountIds: (cfg) => listWecomAccountIds(cfg as ClawdbotConfig),
     resolveAccount: (cfg, accountId) => resolveWecomAccount({ cfg: cfg as ClawdbotConfig, accountId }),

@@ -1,36 +1,52 @@
-import { z } from "zod";
+import type { ChannelConfigSchema } from "clawdbot/plugin-sdk";
 
-const allowFromEntry = z.union([z.string(), z.number()]);
+const dmSchema = {
+  type: "object",
+  properties: {
+    enabled: { type: "boolean" },
+    policy: { type: "string", enum: ["pairing", "allowlist", "open", "disabled"] },
+    allowFrom: {
+      type: "array",
+      items: { oneOf: [{ type: "string" }, { type: "number" }] },
+    },
+  },
+  additionalProperties: false,
+};
 
-const dmSchema = z
-  .object({
-    enabled: z.boolean().optional(),
-    policy: z.enum(["pairing", "allowlist", "open", "disabled"]).optional(),
-    allowFrom: z.array(allowFromEntry).optional(),
-  })
-  .optional();
-
-export const WecomConfigSchema = z.object({
-  name: z.string().optional(),
-  enabled: z.boolean().optional(),
-
-  webhookPath: z.string().optional(),
-  token: z.string().optional(),
-  encodingAESKey: z.string().optional(),
-  receiveId: z.string().optional(),
-
-  welcomeText: z.string().optional(),
-  dm: dmSchema,
-
-  defaultAccount: z.string().optional(),
-  accounts: z.object({}).catchall(z.object({
-    name: z.string().optional(),
-    enabled: z.boolean().optional(),
-    webhookPath: z.string().optional(),
-    token: z.string().optional(),
-    encodingAESKey: z.string().optional(),
-    receiveId: z.string().optional(),
-    welcomeText: z.string().optional(),
+const accountSchema = {
+  type: "object",
+  properties: {
+    name: { type: "string" },
+    enabled: { type: "boolean" },
+    webhookPath: { type: "string" },
+    token: { type: "string" },
+    encodingAESKey: { type: "string" },
+    receiveId: { type: "string" },
+    welcomeText: { type: "string" },
     dm: dmSchema,
-  })).optional(),
-});
+  },
+  additionalProperties: false,
+};
+
+export const wecomConfigSchema: ChannelConfigSchema = {
+  schema: {
+    $schema: "http://json-schema.org/draft-07/schema#",
+    type: "object",
+    properties: {
+      name: { type: "string" },
+      enabled: { type: "boolean" },
+      webhookPath: { type: "string" },
+      token: { type: "string" },
+      encodingAESKey: { type: "string" },
+      receiveId: { type: "string" },
+      welcomeText: { type: "string" },
+      dm: dmSchema,
+      defaultAccount: { type: "string" },
+      accounts: {
+        type: "object",
+        additionalProperties: accountSchema,
+      },
+    },
+    additionalProperties: false,
+  },
+};
