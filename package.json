@@ -24,7 +24,6 @@
     }
   },
   "dependencies": {
-    "zod": "^3.24.1"
-  },
-  "devDependencies": {}
+    "zod": "^4.3.6"
+  }
 }
