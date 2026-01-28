@@ -26,9 +26,7 @@
   "dependencies": {
     "zod": "^3.24.1"
   },
-  "devDependencies": {
-    "clawdbot": "workspace:*"
-  },
+  "devDependencies": {},
   "peerDependencies": {
     "clawdbot": ">=2026.1.25"
   }
