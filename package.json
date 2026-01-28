@@ -23,7 +23,9 @@
       "defaultChoice": "npm"
     }
   },
-  "dependencies": {},
+  "dependencies": {
+    "zod": "^3.24.1"
+  },
   "devDependencies": {
     "clawdbot": "workspace:*"
   },
